@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Vue-vue</title>
+</head>
+<body>
+	<div id="app">
+	<input type="text" v-model="title">
+	<h4>{{ title }}</h4>
+	{{message}}
+	<button v-on:click="greet">Poyy</button>
+	<button v-on:click="pressKey">Click</button>
+	<input type="text" v-on:keyup="pressKey" placeholder="pressKey"></input>
+	<input type="text" v-on:keyup="pressWhat" v-on:keyup.enter="enter" placeholder="pressWhat"></input>
+	<input type="button" value="udri!"  v-on:click="play">
+	<audio id="audio" src="fart.mp3" ></audio><br/>
+	
+		<label for="">first name</label> <input type="text" v-model="user.first">
+		<label for="">last name</label> <input type="text" v-model="user.last">
+	
+	<h4>{{ fullname }}</h4>
+	<form v-on:submit="addItem">
+	<input type="text" placeholder="enter name" v-model="newItem.name">
+	<input type="text" placeholder="enter email" v-model="newItem.email">
+	<input type="submit" value="submit">
+	</form>
+	<ul>
+	<li v-for="item in items">
+		<input type="checkbox" class="toggle" v-model="item.contacted">
+		<span :class="{ contacted: items.contacted }">
+			{{item.name}} {{item.email}} <button v-on:click="deleteItem(item)">X</button>
+		</span>
+	</li>
+	</ul>
+	</div>
+
+
+
+	<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+	<script>
+		var app = new Vue({
+  			el: '#app',
+  			data: {
+   			 message: 'Hello Vue!',
+   			 title: null,
+   			 newItem: {},
+   			 user: {
+   			 	first:'mire',
+   			 	last:'boo'
+   			 },
+   			 items: [
+   			 	{
+   			 		name:'mirko',
+   			 		email:'mirko@email.com',
+					contacted: false
+
+   			 	},
+   			 	{
+   			 		name:'looloo',
+   			 		email:'looloo@email.com',
+					contacted: false
+
+   			 	}
+   			 ]
+ 		 },
+ 		 methods: {
+ 		 	greet: function () {
+ 		 		alert('leleleleelle');
+ 		 	},
+ 		 	pressKey: function () {
+ 		 		console.log('key pressed');
+ 		 	},
+ 		 	pressWhat: function (e) {
+ 		 		console.log(e.target.value);
+ 		 	},
+ 		 	enter: function () {
+ 		 		console.log('enter pressed');
+ 		 	},
+ 		 	play: function (){
+       			var audio = document.getElementById("audio");
+       			audio.play();
+                 },
+            addItem: function (e) {
+            	this.items.push({
+
+            		name: this.newItem.name,
+            		email: this.newItem.email
+            	});
+					e.preventDefault();
+
+            	},
+			deleteItem: function (item) {
+				this.items.splice(this.items.indexOf(item),1);
+				alert(item.name+" deleted");
+			}
+ 		 	},
+ 		 computed: {
+ 		 	fullname: function () {
+ 		 		return this.user.first+" "+this.user.last;
+ 		 	}
+ 		 }
+		})
+	</script>
+	<style scoped>
+		.contacted {
+			text-decoration: line-through;
+		}
+	</style>
+</body>
+</html>
